@@ -1,12 +1,17 @@
 import express from 'express'
+import path from 'path'
+import cors from 'cors'
+import routes from './routes'
 
 const app = express()
 
-app.get('/hw', (response, request) => {
-    request.status(200).json({ message: 'Hello World!' })
-})
+app.use(cors())
+app.use(express.json())
+app.use(routes)
 
-const port = 3333
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
+
+const port = 3333 
 
 app.listen(port, () => {
     console.log(`API running in localhost:${port}`)
